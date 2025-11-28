@@ -137,6 +137,7 @@
 
 
 
+<<<<<<< HEAD
 
 // FILE: components/Navbar.tsx
 // REPLACE your existing Navbar with this updated version
@@ -262,6 +263,8 @@
 //   )
 // }
 // FILE: components/Navbar.tsx
+=======
+>>>>>>> 9b161f6
 "use client"
 
 import Link from "next/link"

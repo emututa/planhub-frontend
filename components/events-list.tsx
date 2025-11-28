@@ -86,9 +86,11 @@ export default function EventsList({
   // ---------------------------
 
   // Register modal handlers
+
+
   const handleRegisterClick = (event: Event) => {
-    setRegisteringEvent(event)
-  }
+  setRegisteringEvent(event)
+}
 
   const handleRegisterSubmit = (data: any) => {
     if (registeringEvent) {
@@ -377,13 +379,19 @@ export default function EventsList({
   </div>
 )}
 
-      {/* Register Modal */}
       {registeringEvent && (
-        <RegisterModal
-          onClose={handleRegisterModalClose}
-          onSubmit={handleRegisterSubmit}
-        />
-      )}
+  <RegisterModal
+    eventId={registeringEvent.id}
+    eventTitle={registeringEvent.title}
+    onClose={() => setRegisteringEvent(null)}
+    onSuccess={() => {
+      // Optional: Refresh registrations or show success message
+      console.log('Registration submitted successfully!')
+      // You can also call onRegister if you want to update local state
+      // onRegister(registeringEvent.id)
+    }}
+  />
+)}
 
 
     </div>

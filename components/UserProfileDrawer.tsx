@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // // FILE: components/UserProfileDrawer.tsx
 // // This is a NEW component - create this file in your components folder
 
@@ -361,6 +362,9 @@
 
 
 
+=======
+
+>>>>>>> 9b161f6
 
 
 // FILE: components/UserProfileDrawer.tsx

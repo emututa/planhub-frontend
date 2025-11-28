@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "/dashboard/page": "app/dashboard/page.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js"
+=======
+  "/dashboard/page": "app/dashboard/page.js"
+>>>>>>> 9b161f6
 }

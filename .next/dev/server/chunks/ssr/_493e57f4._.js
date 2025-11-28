@@ -427,336 +427,6 @@ function NotificationCenter({ isOpen, onClose }) {
 "[project]/components/UserProfileDrawer.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// // FILE: components/UserProfileDrawer.tsx
-// // This is a NEW component - create this file in your components folder
-// "use client"
-// import React, { useState, useEffect } from 'react'
-// import { LogOut, User, Mail, Lock, Edit2, Check, X } from 'lucide-react'
-// import { useUserStore } from '@/context/userStore' // Import your actual store
-// export default function UserProfileDrawer() {
-//   const { user, updateUser, logout, isLoading } = useUserStore()
-//   const [isOpen, setIsOpen] = useState(false)
-//   const [editMode, setEditMode] = useState<'name' | 'email' | 'password' | null>(null)
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     currentPassword: '',
-//     newPassword: '',
-//     confirmPassword: ''
-//   })
-//   const [error, setError] = useState('')
-//   const [success, setSuccess] = useState('')
-//   useEffect(() => {
-//     if (user) {
-//       setFormData(prev => ({
-//         ...prev,
-//         name: user.name,
-//         email: user.email
-//       }))
-//     }
-//   }, [user])
-//   const handleEdit = (field: 'name' | 'email' | 'password') => {
-//     setEditMode(field)
-//     setError('')
-//     setSuccess('')
-//   }
-//   const handleCancel = () => {
-//     setEditMode(null)
-//     setFormData(prev => ({
-//       ...prev,
-//       name: user?.name || '',
-//       email: user?.email || '',
-//       currentPassword: '',
-//       newPassword: '',
-//       confirmPassword: ''
-//     }))
-//     setError('')
-//   }
-//   const handleSave = async () => {
-//     setError('')
-//     setSuccess('')
-//     try {
-//       if (editMode === 'name') {
-//         if (!formData.name.trim()) {
-//           setError('Name cannot be empty')
-//           return
-//         }
-//         await updateUser(user?.id || '', { name: formData.name })
-//         setSuccess('Name updated successfully!')
-//       } 
-//       else if (editMode === 'email') {
-//         if (!formData.email.trim() || !formData.email.includes('@')) {
-//           setError('Please enter a valid email')
-//           return
-//         }
-//         await updateUser(user?.id || '', { email: formData.email })
-//         setSuccess('Email updated successfully!')
-//       } 
-//       else if (editMode === 'password') {
-//         if (!formData.currentPassword) {
-//           setError('Please enter your current password')
-//           return
-//         }
-//         if (formData.newPassword.length < 6) {
-//           setError('New password must be at least 6 characters')
-//           return
-//         }
-//         if (formData.newPassword !== formData.confirmPassword) {
-//           setError('Passwords do not match')
-//           return
-//         }
-//         await updateUser(user?.id || '', { 
-//           password: formData.newPassword,
-//           currentPassword: formData.currentPassword 
-//         } as any)
-//         setSuccess('Password updated successfully!')
-//         setFormData(prev => ({
-//           ...prev,
-//           currentPassword: '',
-//           newPassword: '',
-//           confirmPassword: ''
-//         }))
-//       }
-//       setTimeout(() => {
-//         setEditMode(null)
-//         setSuccess('')
-//       }, 2000)
-//     } catch (err: any) {
-//       setError(err.message || 'Update failed')
-//     }
-//   }
-//   const handleLogout = () => {
-//     logout()
-//     setIsOpen(false)
-//   }
-//   return (
-//     <>
-//       {/* Profile Button - Add this to your Navbar */}
-//       <button
-//         onClick={() => setIsOpen(true)}
-//         className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
-//       >
-//         <User size={20} />
-//         <span className="hidden sm:inline">My Profile</span>
-//       </button>
-//       {/* Overlay */}
-//       {isOpen && (
-//         <div 
-//           className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
-//           onClick={() => setIsOpen(false)}
-//         />
-//       )}
-//       {/* Drawer */}
-//       <div
-//         className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
-//           isOpen ? 'translate-x-0' : 'translate-x-full'
-//         }`}
-//       >
-//         <div className="h-full flex flex-col">
-//           {/* Header */}
-//           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
-//             <div className="flex items-center justify-between mb-4">
-//               <h2 className="text-2xl font-bold">My Profile</h2>
-//               <button
-//                 onClick={() => setIsOpen(false)}
-//                 className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-//               >
-//                 <X size={24} />
-//               </button>
-//             </div>
-//             <div className="flex items-center gap-3">
-//               <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">
-//                 {user?.name?.charAt(0).toUpperCase()}
-//               </div>
-//               <div>
-//                 <p className="font-semibold text-lg">{user?.name}</p>
-//                 <p className="text-blue-100 text-sm">{user?.email}</p>
-//               </div>
-//             </div>
-//           </div>
-//           {/* Content */}
-//           <div className="flex-1 overflow-y-auto p-6 space-y-6">
-//             {/* Success Message */}
-//             {success && (
-//               <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-2">
-//                 <Check size={20} />
-//                 {success}
-//               </div>
-//             )}
-//             {/* Error Message */}
-//             {error && (
-//               <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
-//                 {error}
-//               </div>
-//             )}
-//             {/* Name Field */}
-//             <div className="border-b border-gray-200 pb-4">
-//               <div className="flex items-center justify-between mb-2">
-//                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-//                   <User size={16} />
-//                   Full Name
-//                 </label>
-//                 {editMode !== 'name' && (
-//                   <button
-//                     onClick={() => handleEdit('name')}
-//                     className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1"
-//                   >
-//                     <Edit2 size={14} />
-//                     Edit
-//                   </button>
-//                 )}
-//               </div>
-//               {editMode === 'name' ? (
-//                 <div className="space-y-3">
-//                   <input
-//                     type="text"
-//                     value={formData.name}
-//                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-//                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-//                     placeholder="Enter your name"
-//                   />
-//                   <div className="flex gap-2">
-//                     <button
-//                       onClick={handleSave}
-//                       disabled={isLoading}
-//                       className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium disabled:opacity-50"
-//                     >
-//                       {isLoading ? 'Saving...' : 'Save'}
-//                     </button>
-//                     <button
-//                       onClick={handleCancel}
-//                       className="flex-1 px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors text-sm font-medium"
-//                     >
-//                       Cancel
-//                     </button>
-//                   </div>
-//                 </div>
-//               ) : (
-//                 <p className="text-gray-900">{user?.name}</p>
-//               )}
-//             </div>
-//             {/* Email Field */}
-//             <div className="border-b border-gray-200 pb-4">
-//               <div className="flex items-center justify-between mb-2">
-//                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-//                   <Mail size={16} />
-//                   Email Address
-//                 </label>
-//                 {editMode !== 'email' && (
-//                   <button
-//                     onClick={() => handleEdit('email')}
-//                     className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1"
-//                   >
-//                     <Edit2 size={14} />
-//                     Edit
-//                   </button>
-//                 )}
-//               </div>
-//               {editMode === 'email' ? (
-//                 <div className="space-y-3">
-//                   <input
-//                     type="email"
-//                     value={formData.email}
-//                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-//                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-//                     placeholder="Enter your email"
-//                   />
-//                   <div className="flex gap-2">
-//                     <button
-//                       onClick={handleSave}
-//                       disabled={isLoading}
-//                       className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium disabled:opacity-50"
-//                     >
-//                       {isLoading ? 'Saving...' : 'Save'}
-//                     </button>
-//                     <button
-//                       onClick={handleCancel}
-//                       className="flex-1 px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors text-sm font-medium"
-//                     >
-//                       Cancel
-//                     </button>
-//                   </div>
-//                 </div>
-//               ) : (
-//                 <p className="text-gray-900">{user?.email}</p>
-//               )}
-//             </div>
-//             {/* Password Field */}
-//             <div className="pb-4">
-//               <div className="flex items-center justify-between mb-2">
-//                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-//                   <Lock size={16} />
-//                   Password
-//                 </label>
-//                 {editMode !== 'password' && (
-//                   <button
-//                     onClick={() => handleEdit('password')}
-//                     className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1"
-//                   >
-//                     <Edit2 size={14} />
-//                     Change
-//                   </button>
-//                 )}
-//               </div>
-//               {editMode === 'password' ? (
-//                 <div className="space-y-3">
-//                   <input
-//                     type="password"
-//                     value={formData.currentPassword}
-//                     onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
-//                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-//                     placeholder="Current password"
-//                   />
-//                   <input
-//                     type="password"
-//                     value={formData.newPassword}
-//                     onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
-//                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-//                     placeholder="New password"
-//                   />
-//                   <input
-//                     type="password"
-//                     value={formData.confirmPassword}
-//                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-//                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-//                     placeholder="Confirm new password"
-//                   />
-//                   <div className="flex gap-2">
-//                     <button
-//                       onClick={handleSave}
-//                       disabled={isLoading}
-//                       className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium disabled:opacity-50"
-//                     >
-//                       {isLoading ? 'Saving...' : 'Save'}
-//                     </button>
-//                     <button
-//                       onClick={handleCancel}
-//                       className="flex-1 px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors text-sm font-medium"
-//                     >
-//                       Cancel
-//                     </button>
-//                   </div>
-//                 </div>
-//               ) : (
-//                 <p className="text-gray-900">••••••••</p>
-//               )}
-//             </div>
-//           </div>
-//           {/* Footer - Logout Button */}
-//           <div className="p-6 border-t border-gray-200 bg-gray-50">
-//             <button
-//               onClick={handleLogout}
-//               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors font-medium"
-//             >
-//               <LogOut size={20} />
-//               Logout
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   )
-// }
 // FILE: components/UserProfileDrawer.tsx
 __turbopack_context__.s([
     "default",
@@ -908,11 +578,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                 children: user.name?.charAt(0).toUpperCase() || 'U'
             }, void 0, false, {
                 fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                lineNumber: 520,
-=======
                 lineNumber: 158,
->>>>>>> 9b161f6
                 columnNumber: 7
             }, this),
             isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -920,11 +586,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                 onClick: handleCloseDrawer
             }, void 0, false, {
                 fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                lineNumber: 530,
-=======
                 lineNumber: 168,
->>>>>>> 9b161f6
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -943,11 +605,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                             children: "My Profile"
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 546,
-=======
                                             lineNumber: 184,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -957,30 +615,18 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                 size: 24
                                             }, void 0, false, {
                                                 fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                lineNumber: 551,
-=======
                                                 lineNumber: 189,
->>>>>>> 9b161f6
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 547,
-=======
                                             lineNumber: 185,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 545,
-=======
                                     lineNumber: 183,
->>>>>>> 9b161f6
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -991,11 +637,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                             children: user.name?.charAt(0).toUpperCase() || 'U'
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 555,
-=======
                                             lineNumber: 193,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1005,11 +647,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     children: user.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 559,
-=======
                                                     lineNumber: 197,
->>>>>>> 9b161f6
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1017,41 +655,25 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     children: user.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 560,
-=======
                                                     lineNumber: 198,
->>>>>>> 9b161f6
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 558,
-=======
                                             lineNumber: 196,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 554,
-=======
                                     lineNumber: 192,
->>>>>>> 9b161f6
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                            lineNumber: 544,
-=======
                             lineNumber: 182,
->>>>>>> 9b161f6
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1064,22 +686,14 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                             size: 20
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 570,
-=======
                                             lineNumber: 208,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this),
                                         success
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 569,
-=======
                                     lineNumber: 207,
->>>>>>> 9b161f6
                                     columnNumber: 15
                                 }, this),
                                 error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1087,11 +701,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                     children: error
                                 }, void 0, false, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 577,
-=======
                                     lineNumber: 215,
->>>>>>> 9b161f6
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1107,22 +717,14 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 586,
-=======
                                                             lineNumber: 224,
->>>>>>> 9b161f6
                                                             columnNumber: 19
                                                         }, this),
                                                         "Full Name"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 585,
-=======
                                                     lineNumber: 223,
->>>>>>> 9b161f6
                                                     columnNumber: 17
                                                 }, this),
                                                 editMode !== 'name' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1133,32 +735,20 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 594,
-=======
                                                             lineNumber: 232,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this),
                                                         "Edit"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 590,
-=======
                                                     lineNumber: 228,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 584,
-=======
                                             lineNumber: 222,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this),
                                         editMode === 'name' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1175,11 +765,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     placeholder: "Enter your name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 601,
-=======
                                                     lineNumber: 239,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1192,11 +778,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             children: isLoading ? 'Saving...' : 'Save'
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 609,
-=======
                                                             lineNumber: 247,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1205,52 +787,32 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             children: "Cancel"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 616,
-=======
                                                             lineNumber: 254,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 608,
-=======
                                                     lineNumber: 246,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 600,
-=======
                                             lineNumber: 238,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-gray-900",
                                             children: user.name
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 625,
-=======
                                             lineNumber: 263,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 583,
-=======
                                     lineNumber: 221,
->>>>>>> 9b161f6
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1266,22 +828,14 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 633,
-=======
                                                             lineNumber: 271,
->>>>>>> 9b161f6
                                                             columnNumber: 19
                                                         }, this),
                                                         "Email Address"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 632,
-=======
                                                     lineNumber: 270,
->>>>>>> 9b161f6
                                                     columnNumber: 17
                                                 }, this),
                                                 editMode !== 'email' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1292,32 +846,20 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 641,
-=======
                                                             lineNumber: 279,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this),
                                                         "Edit"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 637,
-=======
                                                     lineNumber: 275,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 631,
-=======
                                             lineNumber: 269,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this),
                                         editMode === 'email' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1334,11 +876,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     placeholder: "Enter your email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 648,
-=======
                                                     lineNumber: 286,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1351,11 +889,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             children: isLoading ? 'Saving...' : 'Save'
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 656,
-=======
                                                             lineNumber: 294,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1364,52 +898,32 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             children: "Cancel"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 663,
-=======
                                                             lineNumber: 301,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 655,
-=======
                                                     lineNumber: 293,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 647,
-=======
                                             lineNumber: 285,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-gray-900",
                                             children: user.email
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 672,
-=======
                                             lineNumber: 310,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 630,
-=======
                                     lineNumber: 268,
->>>>>>> 9b161f6
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1425,22 +939,14 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 680,
-=======
                                                             lineNumber: 318,
->>>>>>> 9b161f6
                                                             columnNumber: 19
                                                         }, this),
                                                         "Password"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 679,
-=======
                                                     lineNumber: 317,
->>>>>>> 9b161f6
                                                     columnNumber: 17
                                                 }, this),
                                                 editMode !== 'password' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1451,32 +957,20 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 688,
-=======
                                                             lineNumber: 326,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this),
                                                         "Change"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 684,
-=======
                                                     lineNumber: 322,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 678,
-=======
                                             lineNumber: 316,
->>>>>>> 9b161f6
                                             columnNumber: 15
                                         }, this),
                                         editMode === 'password' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1493,11 +987,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     placeholder: "Current password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 695,
-=======
                                                     lineNumber: 333,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1511,11 +1001,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     placeholder: "New password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 702,
-=======
                                                     lineNumber: 340,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1529,11 +1015,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                     placeholder: "Confirm new password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 709,
-=======
                                                     lineNumber: 347,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1546,11 +1028,7 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             children: isLoading ? 'Saving...' : 'Save'
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 717,
-=======
                                                             lineNumber: 355,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1559,62 +1037,38 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                                             children: "Cancel"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                            lineNumber: 724,
-=======
                                                             lineNumber: 362,
->>>>>>> 9b161f6
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 716,
-=======
                                                     lineNumber: 354,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 694,
-=======
                                             lineNumber: 332,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-gray-900",
                                             children: "••••••••"
                                         }, void 0, false, {
                                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 733,
-=======
                                             lineNumber: 371,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 677,
-=======
                                     lineNumber: 315,
->>>>>>> 9b161f6
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                            lineNumber: 566,
-=======
                             lineNumber: 204,
->>>>>>> 9b161f6
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1627,50 +1081,30 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
                                         size: 20
                                     }, void 0, false, {
                                         fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 744,
-=======
                                         lineNumber: 382,
->>>>>>> 9b161f6
                                         columnNumber: 15
                                     }, this),
                                     "Logout"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                                lineNumber: 740,
-=======
                                 lineNumber: 378,
->>>>>>> 9b161f6
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                            lineNumber: 739,
-=======
                             lineNumber: 377,
->>>>>>> 9b161f6
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                    lineNumber: 542,
-=======
                     lineNumber: 180,
->>>>>>> 9b161f6
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/UserProfileDrawer.tsx",
-<<<<<<< HEAD
-                lineNumber: 537,
-=======
                 lineNumber: 175,
->>>>>>> 9b161f6
                 columnNumber: 7
             }, this)
         ]
@@ -1796,120 +1230,6 @@ function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }) {
 //     </nav>
 //   )
 // }
-<<<<<<< HEAD
-// FILE: components/Navbar.tsx
-// REPLACE your existing Navbar with this updated version
-// FILE: components/Navbar.tsx
-// REPLACE your existing Navbar with this updated version
-// "use client"
-// import Link from "next/link"
-// import Image from "next/image"
-// import { Menu, X, Bell } from "lucide-react"
-// import { useState, useEffect } from "react"
-// import NotificationCenter from "./notification-center"
-// import UserProfileDrawer from "./UserProfileDrawer" // ADD THIS IMPORT
-// interface NavbarProps {
-//   user: { name: string; email: string } | null
-//   onLogout: () => void
-// }
-// export function Navbar({ user, onLogout }: NavbarProps) {
-//   const [isOpen, setIsOpen] = useState(false)
-//   const [showNotifications, setShowNotifications] = useState(false)
-//   const [notificationCount, setNotificationCount] = useState(0)
-//   useEffect(() => {
-//     const notifications = JSON.parse(localStorage.getItem("planhub_notifications") || "[]")
-//     setNotificationCount(notifications.length)
-//   }, [showNotifications])
-//   return (
-//     <nav className="sticky top-0 z-50 bg-white border-b border-blue-100 shadow-sm">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className="flex justify-between items-center h-16">
-//           {/* Logo */}
-//           <a href="#" className="flex items-center gap-2">
-//             <Image src="/logo.png" alt="PlanHub Logo" width={140} height={100} className="rounded-md" />
-//           </a>
-//           {/* Desktop Navigation */}
-//           <div className="hidden md:flex items-center gap-6">
-//             <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">
-//               Dashboard
-//             </Link>
-//             <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">
-//               Events
-//             </Link>
-//             <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">
-//               Posts
-//             </Link>
-//           </div>
-//           {/* Desktop - User Info and Actions */}
-//           <div className="hidden md:flex items-center gap-4">
-//             {user && (
-//               <>
-//                 {/* Notification Button */}
-//                 <button
-//                   onClick={() => setShowNotifications(true)}
-//                   className="relative p-2 hover:bg-blue-50 rounded-lg text-gray-600 hover:text-blue-600 transition"
-//                   title="View notifications"
-//                 >
-//                   <Bell size={20} />
-//                   {notificationCount > 0 && (
-//                     <span className="absolute top-0 right-0 w-5 h-5 bg-blue-600 text-white text-xs rounded-full flex items-center justify-center font-bold">
-//                       {notificationCount}
-//                     </span>
-//                   )}
-//                 </button>
-//                 {/* Profile Drawer - This shows the "My Profile" button */}
-//                 <UserProfileDrawer />
-//               </>
-//             )}
-//           </div>
-//           {/* Mobile Menu Button */}
-//           <button
-//             onClick={() => setIsOpen(!isOpen)}
-//             className="md:hidden p-2 hover:bg-blue-50 rounded-lg text-gray-600"
-//           >
-//             {isOpen ? <X size={24} /> : <Menu size={24} />}
-//           </button>
-//         </div>
-//         {/* Mobile Navigation */}
-//         {isOpen && (
-//           <div className="md:hidden pb-4 border-t border-blue-100">
-//             <Link href="/" className="block py-2 text-gray-600 hover:text-blue-600 font-medium">
-//               Dashboard
-//             </Link>
-//             <Link href="/" className="block py-2 text-gray-600 hover:text-blue-600 font-medium">
-//               My Events
-//             </Link>
-//             <Link href="/" className="block py-2 text-gray-600 hover:text-blue-600 font-medium">
-//               My Posts
-//             </Link>
-//             {user && (
-//               <div className="space-y-2 mt-4">
-//                 <button
-//                   onClick={() => {
-//                     setShowNotifications(true)
-//                     setIsOpen(false)
-//                   }}
-//                   className="w-full flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition font-medium"
-//                 >
-//                   <Bell size={18} />
-//                   Notifications {notificationCount > 0 && `(${notificationCount})`}
-//                 </button>
-//                 {/* Mobile Profile Button - Shows the drawer */}
-//                 <div className="w-full">
-//                   <UserProfileDrawer />
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         )}
-//       </div>
-//       <NotificationCenter isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
-//     </nav>
-//   )
-// }
-// FILE: components/Navbar.tsx
-=======
->>>>>>> 9b161f6
 __turbopack_context__.s([
     "Navbar",
     ()=>Navbar
@@ -1972,20 +1292,12 @@ function Navbar() {
                                     className: "rounded-md"
                                 }, void 0, false, {
                                     fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 303,
-=======
                                     lineNumber: 178,
->>>>>>> 9b161f6
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 302,
-=======
                                 lineNumber: 177,
->>>>>>> 9b161f6
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1997,11 +1309,7 @@ function Navbar() {
                                         children: "Dashboard"
                                     }, void 0, false, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 308,
-=======
                                         lineNumber: 183,
->>>>>>> 9b161f6
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2010,11 +1318,7 @@ function Navbar() {
                                         children: "Events"
                                     }, void 0, false, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 311,
-=======
                                         lineNumber: 186,
->>>>>>> 9b161f6
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2023,21 +1327,13 @@ function Navbar() {
                                         children: "Posts"
                                     }, void 0, false, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 314,
-=======
                                         lineNumber: 189,
->>>>>>> 9b161f6
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 307,
-=======
                                 lineNumber: 182,
->>>>>>> 9b161f6
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2053,11 +1349,7 @@ function Navbar() {
                                                     size: 20
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 329,
-=======
                                                     lineNumber: 204,
->>>>>>> 9b161f6
                                                     columnNumber: 19
                                                 }, this),
                                                 notificationCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2065,21 +1357,13 @@ function Navbar() {
                                                     children: notificationCount
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                    lineNumber: 331,
-=======
                                                     lineNumber: 206,
->>>>>>> 9b161f6
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 324,
-=======
                                             lineNumber: 199,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$UserProfileDrawer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2088,11 +1372,7 @@ function Navbar() {
                                             onUserUpdate: handleUserUpdate
                                         }, void 0, false, {
                                             fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 338,
-=======
                                             lineNumber: 213,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this)
                                     ]
@@ -2105,11 +1385,7 @@ function Navbar() {
                                             children: "Login"
                                         }, void 0, false, {
                                             fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 346,
-=======
                                             lineNumber: 221,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2118,30 +1394,18 @@ function Navbar() {
                                             children: "Register"
                                         }, void 0, false, {
                                             fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                            lineNumber: 352,
-=======
                                             lineNumber: 227,
->>>>>>> 9b161f6
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 345,
-=======
                                     lineNumber: 220,
->>>>>>> 9b161f6
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 320,
-=======
                                 lineNumber: 195,
->>>>>>> 9b161f6
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2151,40 +1415,24 @@ function Navbar() {
                                     size: 24
                                 }, void 0, false, {
                                     fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 367,
-=======
                                     lineNumber: 242,
->>>>>>> 9b161f6
                                     columnNumber: 23
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$menu$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {
                                     size: 24
                                 }, void 0, false, {
                                     fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                    lineNumber: 367,
-=======
                                     lineNumber: 242,
->>>>>>> 9b161f6
                                     columnNumber: 41
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 363,
-=======
                                 lineNumber: 238,
->>>>>>> 9b161f6
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                        lineNumber: 300,
-=======
                         lineNumber: 175,
->>>>>>> 9b161f6
                         columnNumber: 9
                     }, this),
                     isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2196,11 +1444,7 @@ function Navbar() {
                                 children: "Dashboard"
                             }, void 0, false, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 374,
-=======
                                 lineNumber: 249,
->>>>>>> 9b161f6
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2209,11 +1453,7 @@ function Navbar() {
                                 children: "My Events"
                             }, void 0, false, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 377,
-=======
                                 lineNumber: 252,
->>>>>>> 9b161f6
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2222,11 +1462,7 @@ function Navbar() {
                                 children: "My Posts"
                             }, void 0, false, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 380,
-=======
                                 lineNumber: 255,
->>>>>>> 9b161f6
                                 columnNumber: 13
                             }, this),
                             user ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2243,11 +1479,7 @@ function Navbar() {
                                                 size: 18
                                             }, void 0, false, {
                                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                lineNumber: 393,
-=======
                                                 lineNumber: 268,
->>>>>>> 9b161f6
                                                 columnNumber: 19
                                             }, this),
                                             "Notifications ",
@@ -2255,11 +1487,7 @@ function Navbar() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 386,
-=======
                                         lineNumber: 261,
->>>>>>> 9b161f6
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2272,11 +1500,7 @@ function Navbar() {
                                                 onClose: ()=>setIsOpen(false)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                lineNumber: 399,
-=======
                                                 lineNumber: 274,
->>>>>>> 9b161f6
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2287,11 +1511,7 @@ function Navbar() {
                                                         children: user.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                        lineNumber: 406,
-=======
                                                         lineNumber: 281,
->>>>>>> 9b161f6
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2299,41 +1519,25 @@ function Navbar() {
                                                         children: user.email
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                        lineNumber: 407,
-=======
                                                         lineNumber: 282,
->>>>>>> 9b161f6
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                                lineNumber: 405,
-=======
                                                 lineNumber: 280,
->>>>>>> 9b161f6
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 398,
-=======
                                         lineNumber: 273,
->>>>>>> 9b161f6
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 385,
-=======
                                 lineNumber: 260,
->>>>>>> 9b161f6
                                 columnNumber: 15
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "space-y-2 mt-4",
@@ -2344,11 +1548,7 @@ function Navbar() {
                                         children: "Login"
                                     }, void 0, false, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 413,
-=======
                                         lineNumber: 288,
->>>>>>> 9b161f6
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2357,41 +1557,25 @@ function Navbar() {
                                         children: "Register"
                                     }, void 0, false, {
                                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                        lineNumber: 419,
-=======
                                         lineNumber: 294,
->>>>>>> 9b161f6
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                                lineNumber: 412,
-=======
                                 lineNumber: 287,
->>>>>>> 9b161f6
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                        lineNumber: 373,
-=======
                         lineNumber: 248,
->>>>>>> 9b161f6
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                lineNumber: 299,
-=======
                 lineNumber: 174,
->>>>>>> 9b161f6
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$notification$2d$center$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2399,21 +1583,13 @@ function Navbar() {
                 onClose: ()=>setShowNotifications(false)
             }, void 0, false, {
                 fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-                lineNumber: 431,
-=======
                 lineNumber: 306,
->>>>>>> 9b161f6
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/navbar.tsx",
-<<<<<<< HEAD
-        lineNumber: 298,
-=======
         lineNumber: 173,
->>>>>>> 9b161f6
         columnNumber: 5
     }, this);
 }
@@ -3548,251 +2724,388 @@ function PostsList({ posts, userId, onEdit, onDelete, onLike, onDislike }) {
     }, this);
 }
 }),
-"[project]/components/ui/label.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"[project]/lib/api/registrationApi.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([
-    "Label",
-    ()=>Label
+    "registrationRoutes",
+    ()=>registrationRoutes
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$label$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-label/dist/index.mjs [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-ssr] (ecmascript)");
-'use client';
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/index.ts [app-ssr] (ecmascript)");
 ;
-;
-;
-function Label({ className, ...props }) {
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$label$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Root"], {
-        "data-slot": "label",
-        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])('flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50', className),
-        ...props
-    }, void 0, false, {
-        fileName: "[project]/components/ui/label.tsx",
-        lineNumber: 13,
-        columnNumber: 5
-    }, this);
-}
-;
-}),
-"[project]/components/registerform.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
-"use strict";
-
-__turbopack_context__.s([
-    "default",
-    ()=>RegisterForm
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/input.tsx [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/card.tsx [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/label.tsx [app-ssr] (ecmascript)");
-"use client";
-;
-;
-;
-;
-;
-;
-function RegisterForm({ onSubmit }) {
-    const [name, setName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const [email, setEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const [phonenumber, setPhone] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        if (!name || !email || !phonenumber) {
-            return setError("All fields are required.");
-        }
-        setError("");
-        onSubmit({
-            name,
-            email,
-            phonenumber
+const registrationRoutes = {
+    // POST /api/registrations - Register for event with name and email
+    registerForEvent: async (data)=>{
+        return await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["client"].post('/registrations', data);
+    },
+    // GET /api/registrations/my-registrations?email=xxx - Get user's registrations by email
+    getMyRegistrations: async (email)=>{
+        return await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["client"].get(`/registrations/my-registrations?email=${email}`);
+    },
+    // GET /api/registrations/event/:eventId - Get all registrations for an event
+    getEventRegistrations: async (eventId)=>{
+        return await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["client"].get(`/registrations/event/${eventId}`);
+    },
+    // GET /api/registrations/:id - Get specific registration
+    getRegistrationById: async (id)=>{
+        return await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["client"].get(`/registrations/${id}`);
+    },
+    // DELETE /api/registrations/:id - Cancel registration
+    cancelRegistration: async (id, email)=>{
+        return await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["client"].delete(`/registrations/${id}`, {
+            data: {
+                email
+            }
         });
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
-        className: "max-w-md mx-auto p-4",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardHeader"], {
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardTitle"], {
-                    className: "text-primary text-center",
-                    children: "Create Account"
-                }, void 0, false, {
-                    fileName: "[project]/components/registerform.tsx",
-                    lineNumber: 31,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/registerform.tsx",
-                lineNumber: 30,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-                    onSubmit: handleSubmit,
-                    className: "space-y-4",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "space-y-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                    children: "Your Name"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/registerform.tsx",
-                                    lineNumber: 39,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                    type: "text",
-                                    placeholder: "John Doe",
-                                    value: name,
-                                    onChange: (e)=>setName(e.target.value)
-                                }, void 0, false, {
-                                    fileName: "[project]/components/registerform.tsx",
-                                    lineNumber: 40,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/registerform.tsx",
-                            lineNumber: 38,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "space-y-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                    children: "Email"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/registerform.tsx",
-                                    lineNumber: 50,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                    type: "email",
-                                    placeholder: "you@example.com",
-                                    value: email,
-                                    onChange: (e)=>setEmail(e.target.value)
-                                }, void 0, false, {
-                                    fileName: "[project]/components/registerform.tsx",
-                                    lineNumber: 51,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/registerform.tsx",
-                            lineNumber: 49,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "space-y-1",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                    children: "Phone"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/registerform.tsx",
-                                    lineNumber: 61,
-                                    columnNumber: 3
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                    type: "tel",
-                                    placeholder: "0772 000 000",
-                                    value: phonenumber,
-                                    onChange: (e)=>setPhone(e.target.value)
-                                }, void 0, false, {
-                                    fileName: "[project]/components/registerform.tsx",
-                                    lineNumber: 62,
-                                    columnNumber: 3
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/registerform.tsx",
-                            lineNumber: 60,
-                            columnNumber: 11
-                        }, this),
-                        error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-red-500 text-sm",
-                            children: error
-                        }, void 0, false, {
-                            fileName: "[project]/components/registerform.tsx",
-                            lineNumber: 72,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                            type: "submit",
-                            className: "w-full mt-2",
-                            children: "Register"
-                        }, void 0, false, {
-                            fileName: "[project]/components/registerform.tsx",
-                            lineNumber: 75,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/components/registerform.tsx",
-                    lineNumber: 35,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/registerform.tsx",
-                lineNumber: 34,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/components/registerform.tsx",
-        lineNumber: 29,
-        columnNumber: 5
-    }, this);
-}
+    }
+};
 }),
 "[project]/components/registerModal.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// FILE: components/registerModal.tsx
 __turbopack_context__.s([
     "default",
     ()=>RegisterModal
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$registerform$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/registerform.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/card.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/input.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-ssr] (ecmascript) <export default as X>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check-big.js [app-ssr] (ecmascript) <export default as CheckCircle>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-ssr] (ecmascript) <export default as AlertCircle>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2f$registrationApi$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/api/registrationApi.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$userStore$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/context/userStore.tsx [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
 ;
-function RegisterModal({ onClose, onSubmit }) {
+;
+;
+;
+;
+;
+function RegisterModal({ eventId, eventTitle, onClose, onSuccess }) {
+    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$context$2f$userStore$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useUserStore"])();
+    const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
+        name: user?.name || '',
+        email: user?.email || ''
+    });
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    const [success, setSuccess] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const handleChange = (e)=>{
+        const { name, value } = e.target;
+        setFormData((prev)=>({
+                ...prev,
+                [name]: value
+            }));
+        setError(''); // Clear error on input change
+    };
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        setError('');
+        setIsLoading(true);
+        // Validation
+        if (!formData.name.trim()) {
+            setError('Name is required');
+            setIsLoading(false);
+            return;
+        }
+        if (!formData.email.trim() || !formData.email.includes('@')) {
+            setError('Please enter a valid email address');
+            setIsLoading(false);
+            return;
+        }
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2f$registrationApi$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["registrationRoutes"].registerForEvent({
+                event_id: eventId,
+                name: formData.name,
+                email: formData.email
+            });
+            setSuccess(true);
+            // Show success message for 2 seconds then close
+            setTimeout(()=>{
+                onSuccess?.();
+                onClose();
+            }, 2000);
+        } catch (err) {
+            const errorMessage = err.response?.data?.error || err.message || 'Registration failed';
+            setError(errorMessage);
+        } finally{
+            setIsLoading(false);
+        }
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-xl space-y-4",
+        className: "fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
+            className: "w-full max-w-md border-primary/20",
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$registerform$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                    onSubmit: onSubmit
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardHeader"], {
+                    className: "bg-primary/5 border-b border-primary/10",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-start justify-between",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex-1",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardTitle"], {
+                                        className: "text-xl font-bold text-primary mb-1",
+                                        children: "Register for Event"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 82,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-sm text-muted-foreground",
+                                        children: eventTitle
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 85,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 81,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                variant: "ghost",
+                                size: "sm",
+                                onClick: onClose,
+                                className: "ml-4 hover:bg-destructive/10 hover:text-destructive",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
+                                    className: "w-5 h-5"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/registerModal.tsx",
+                                    lineNumber: 93,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 87,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/registerModal.tsx",
+                        lineNumber: 80,
+                        columnNumber: 11
+                    }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/registerModal.tsx",
-                    lineNumber: 18,
+                    lineNumber: 79,
                     columnNumber: 9
                 }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                    className: "w-full mt-2",
-                    onClick: onClose,
-                    children: "Close"
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
+                    className: "pt-6",
+                    children: success ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "text-center py-8",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
+                                className: "w-16 h-16 text-green-500 mx-auto mb-4"
+                            }, void 0, false, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 101,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                className: "text-xl font-semibold text-gray-900 mb-2",
+                                children: "Registration Submitted!"
+                            }, void 0, false, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 102,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-gray-600",
+                                children: "Your registration is pending admin approval. We'll notify you via email once approved."
+                            }, void 0, false, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 105,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/registerModal.tsx",
+                        lineNumber: 100,
+                        columnNumber: 13
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                        onSubmit: handleSubmit,
+                        className: "space-y-4",
+                        children: [
+                            error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
+                                        className: "w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 114,
+                                        columnNumber: 19
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-sm text-red-700",
+                                        children: error
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 115,
+                                        columnNumber: 19
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 113,
+                                columnNumber: 17
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-blue-50 border border-blue-200 rounded-lg p-3",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-sm text-blue-700",
+                                    children: "Your registration will be sent to the admin for approval. You'll receive an email notification once approved."
+                                }, void 0, false, {
+                                    fileName: "[project]/components/registerModal.tsx",
+                                    lineNumber: 121,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 120,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        className: "block text-sm font-medium mb-2 text-gray-700",
+                                        children: [
+                                            "Full Name ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-red-500",
+                                                children: "*"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/registerModal.tsx",
+                                                lineNumber: 129,
+                                                columnNumber: 29
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 128,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                        name: "name",
+                                        value: formData.name,
+                                        onChange: handleChange,
+                                        placeholder: "Enter your full name",
+                                        className: "bg-input border-border",
+                                        disabled: isLoading,
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 131,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 127,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        className: "block text-sm font-medium mb-2 text-gray-700",
+                                        children: [
+                                            "Email Address ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-red-500",
+                                                children: "*"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/registerModal.tsx",
+                                                lineNumber: 145,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 144,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                        name: "email",
+                                        type: "email",
+                                        value: formData.email,
+                                        onChange: handleChange,
+                                        placeholder: "Enter your email",
+                                        className: "bg-input border-border",
+                                        disabled: isLoading,
+                                        required: true
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 147,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 143,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex gap-3 pt-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                        type: "submit",
+                                        disabled: isLoading,
+                                        className: "flex-1 bg-primary hover:bg-primary/90 text-primary-foreground",
+                                        children: isLoading ? 'Submitting...' : 'Submit Registration'
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 161,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                        type: "button",
+                                        onClick: onClose,
+                                        disabled: isLoading,
+                                        className: "flex-1 bg-secondary/20 hover:bg-secondary/30 text-foreground",
+                                        children: "Cancel"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/registerModal.tsx",
+                                        lineNumber: 168,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/registerModal.tsx",
+                                lineNumber: 160,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/registerModal.tsx",
+                        lineNumber: 110,
+                        columnNumber: 13
+                    }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/registerModal.tsx",
-                    lineNumber: 20,
+                    lineNumber: 98,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/registerModal.tsx",
-            lineNumber: 17,
+            lineNumber: 78,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/registerModal.tsx",
-        lineNumber: 16,
+        lineNumber: 77,
         columnNumber: 5
     }, this);
 }
@@ -5868,4 +5181,4 @@ function Dashboard() {
 }),
 ];
 
-//# sourceMappingURL=_d632aa48._.js.map
+//# sourceMappingURL=_493e57f4._.js.map
