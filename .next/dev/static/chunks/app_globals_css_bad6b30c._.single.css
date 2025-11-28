@@ -105,12 +105,7 @@
     --color-red-800: #9f0712;
     --color-orange-600: #f05100;
     --color-yellow-100: #fef9c2;
-<<<<<<< HEAD
-    --color-yellow-200: #fff085;
-    --color-yellow-300: #ffe02a;
-=======
     --color-yellow-700: #a36100;
->>>>>>> 9b161f6
     --color-green-50: #f0fdf4;
     --color-green-100: #dcfce7;
     --color-green-200: #b9f8cf;
@@ -205,12 +200,7 @@
       --color-red-800: lab(33.7174% 55.8993 41.0293);
       --color-orange-600: lab(57.1026% 64.2584 89.8886);
       --color-yellow-100: lab(97.3564% -4.51407 27.344);
-<<<<<<< HEAD
-      --color-yellow-200: lab(94.3433% -5.00426 52.9663);
-      --color-yellow-300: lab(89.7033% -.480324 84.4917);
-=======
       --color-yellow-700: lab(47.8202% 25.2426 66.5015);
->>>>>>> 9b161f6
       --color-green-50: lab(98.1563% -5.60117 2.75913);
       --color-green-100: lab(96.186% -13.8464 6.52362);
       --color-green-200: lab(92.4222% -26.4702 12.9427);
@@ -1879,10 +1869,6 @@
     border-color: #0000;
   }
 
-  .border-yellow-300 {
-    border-color: var(--color-yellow-300);
-  }
-
   .border-t-blue-600 {
     border-top-color: var(--color-blue-600);
   }
@@ -2115,13 +2101,6 @@
     background-color: var(--color-yellow-100);
   }
 
-<<<<<<< HEAD
-  .bg-yellow-200 {
-    background-color: var(--color-yellow-200);
-  }
-
-=======
->>>>>>> 9b161f6
   .bg-gradient-to-br {
     --tw-gradient-position: to bottom right in oklab;
     background-image: linear-gradient(var(--tw-gradient-stops));
@@ -4877,6 +4856,12 @@
   @media (min-width: 40rem) {
     .sm\:flex {
       display: flex;
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:inline {
+      display: inline;
     }
   }
 
