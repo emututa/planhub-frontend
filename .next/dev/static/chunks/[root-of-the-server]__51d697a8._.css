@@ -154,6 +154,9 @@
       --tw-duration: initial;
       --tw-ease: initial;
       --tw-content: "";
+      --tw-scale-x: 1;
+      --tw-scale-y: 1;
+      --tw-scale-z: 1;
       --tw-animation-delay: 0s;
       --tw-animation-direction: normal;
       --tw-animation-duration: initial;
@@ -185,6 +188,9 @@
     --color-red-700: #bf000f;
     --color-red-800: #9f0712;
     --color-orange-600: #f05100;
+    --color-yellow-100: #fef9c2;
+    --color-yellow-200: #fff085;
+    --color-yellow-300: #ffe02a;
     --color-green-50: #f0fdf4;
     --color-green-100: #dcfce7;
     --color-green-200: #b9f8cf;
@@ -198,6 +204,7 @@
     --color-blue-500: #3080ff;
     --color-blue-600: #155dfc;
     --color-blue-700: #1447e6;
+    --color-indigo-50: #eef2ff;
     --color-indigo-600: #4f39f6;
     --color-purple-50: #faf5ff;
     --color-purple-100: #f3e8ff;
@@ -276,6 +283,9 @@
       --color-red-700: lab(40.4273% 67.2623 53.7441);
       --color-red-800: lab(33.7174% 55.8993 41.0293);
       --color-orange-600: lab(57.1026% 64.2584 89.8886);
+      --color-yellow-100: lab(97.3564% -4.51407 27.344);
+      --color-yellow-200: lab(94.3433% -5.00426 52.9663);
+      --color-yellow-300: lab(89.7033% -.480324 84.4917);
       --color-green-50: lab(98.1563% -5.60117 2.75913);
       --color-green-100: lab(96.186% -13.8464 6.52362);
       --color-green-200: lab(92.4222% -26.4702 12.9427);
@@ -289,6 +299,7 @@
       --color-blue-500: lab(54.1736% 13.3368 -74.6839);
       --color-blue-600: lab(44.0605% 29.0279 -86.0352);
       --color-blue-700: lab(36.9089% 35.0961 -85.6872);
+      --color-indigo-50: lab(95.4818% .411302 -6.78529);
       --color-indigo-600: lab(38.4009% 52.6132 -92.3857);
       --color-purple-50: lab(97.1626% 2.99937 -4.13398);
       --color-purple-100: lab(93.3333% 6.9744 -9.83434);
@@ -1235,6 +1246,10 @@
     width: calc(var(--spacing) * 9);
   }
 
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
+
   .w-14 {
     width: calc(var(--spacing) * 14);
   }
@@ -1918,6 +1933,10 @@
     border-color: #0000;
   }
 
+  .border-yellow-300 {
+    border-color: var(--color-yellow-300);
+  }
+
   .border-t-blue-600 {
     border-top-color: var(--color-blue-600);
   }
@@ -2094,6 +2113,10 @@
     background-color: var(--color-red-50);
   }
 
+  .bg-red-100 {
+    background-color: var(--color-red-100);
+  }
+
   .bg-red-500 {
     background-color: var(--color-red-500);
   }
@@ -2138,6 +2161,14 @@
     }
   }
 
+  .bg-yellow-100 {
+    background-color: var(--color-yellow-100);
+  }
+
+  .bg-yellow-200 {
+    background-color: var(--color-yellow-200);
+  }
+
   .bg-gradient-to-br {
     --tw-gradient-position: to bottom right in oklab;
     background-image: linear-gradient(var(--tw-gradient-stops));
@@ -2150,6 +2181,11 @@
 
   .from-blue-50 {
     --tw-gradient-from: var(--color-blue-50);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+
+  .from-blue-500 {
+    --tw-gradient-from: var(--color-blue-500);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
 
@@ -2176,6 +2212,11 @@
 
   .to-blue-400 {
     --tw-gradient-to: var(--color-blue-400);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+
+  .to-indigo-50 {
+    --tw-gradient-to: var(--color-indigo-50);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
 
@@ -3337,6 +3378,15 @@
   .last\:border-b-0:last-child {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 0;
+  }
+
+  @media (hover: hover) {
+    .hover\:scale-105:hover {
+      --tw-scale-x: 105%;
+      --tw-scale-y: 105%;
+      --tw-scale-z: 105%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
   }
 
   @media (hover: hover) {
@@ -6480,6 +6530,24 @@
   syntax: "*";
   inherits: false;
   initial-value: "";
+}
+
+@property --tw-scale-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-scale-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --tw-scale-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
 }
 
 @keyframes spin {

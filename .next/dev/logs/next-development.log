@@ -1,32 +1,157 @@
-[00:00:07.638] Server  LOG      ✓ Ready in 4.8s
-[00:00:36.368] Server  LOG      ○ Compiling / ...
-[00:00:49.983] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:53.008] Server  LOG      ○ Compiling /dashboard ...
-[00:00:57.501] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:57.501] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:00:57.501] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764325956175}
-[00:00:57.904] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764325956558}
-[00:00:58.121] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:01:20.749] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:21.235] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:21.235] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:01:21.235] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764325979897}
-[00:01:21.467] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764325980134}
-[00:01:21.622] Browser WARN    Image with src "/logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:01:21.622] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:01:28.446] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:28.710] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:01:28.710] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:28.710] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:01:28.710] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764325987381}
-[00:01:46.618] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:47.618] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:47.618] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:01:47.618] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764326006293}
-[00:01:47.618] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:01:53.724] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:54.907] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:54.907] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
-[00:01:54.907] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764326013567}
-[00:01:54.907] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:10.067] Server  LOG      ✓ Ready in 6.9s
+[00:00:13.417] Server  LOG      ○ Compiling /dashboard ...
+[00:00:45.549] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:45.896] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         crxemulator=""
+                        >
+                  ...
+
+[00:00:46.360] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:46.360] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:46.360] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764361489892}
+[00:00:47.910] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764361491328}
+[00:00:48.049] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:01:31.266] Server  LOG      ✓ Compiled in 1312ms
+[00:01:43.824] Server  LOG      ✓ Compiled in 534ms
+[00:03:43.175] Server  LOG      ✓ Compiled in 553ms
+[00:03:46.447] Server  LOG      ✓ Compiled in 1108ms
+[00:03:46.916] Browser LOG     🔍 Navbar - User data: null
+[00:03:46.916] Browser LOG     🔍 Navbar - Is user null? true
+[00:03:46.916] Browser LOG     🔍 Navbar - User name: undefined
+[00:03:46.916] Browser LOG     🔍 Navbar - User data: null
+[00:03:46.916] Browser LOG     🔍 Navbar - Is user null? true
+[00:03:46.916] Browser LOG     🔍 Navbar - User name: undefined
+[00:06:49.223] Server  LOG      ✓ Compiled in 618ms
+[00:06:51.396] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:06:51.396] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:06:51.397] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:06:51.397] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:07:17.252] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:07:17.252] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:07:17.252] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:07:17.252] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:08:01.308] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:08:01.308] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:08:01.308] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:08:01.308] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:10:43.815] Browser LOG     🔍 Navbar - User from store: null
+[00:10:43.815] Browser LOG     🔍 Navbar - User from store: null
+[00:10:58.115] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362101652}
+[00:11:10.136] Browser LOG     🔍 Navbar - User from store: null
+[00:11:10.136] Browser LOG     🔍 Navbar - User from store: null
+[00:11:10.136] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362113616}
+[00:11:10.136] Browser LOG     🔍 Navbar - User from store: null
+[00:11:10.136] Browser LOG     🔍 Navbar - User from store: null
+[00:11:31.603] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362135141}
+[00:11:37.586] Browser LOG     🔍 Navbar - User from store: null
+[00:11:37.586] Browser LOG     🔍 Navbar - User from store: null
+[00:11:37.586] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362141041}
+[00:11:37.586] Browser LOG     🔍 Navbar - User from store: null
+[00:11:37.586] Browser LOG     🔍 Navbar - User from store: null
+[00:11:43.215] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362146749}
+[00:12:23.205] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:23.205] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:23.205] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362186710}
+[00:12:23.205] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:23.205] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:34.806] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"http://localhost:3000/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362198336}
+[00:12:37.388] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:37.388] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:37.388] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362200869}
+[00:12:37.388] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:37.388] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:40.587] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362204085}
+[00:12:40.883] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:40.883] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:40.883] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362204394}
+[00:12:40.883] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:40.883] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:45.202] Server  LOG     🔍 Navbar - User from store: null
+[00:12:46.334] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:47.035] Browser LOG     🔍 Navbar - User from store: null
+[00:12:47.035] Browser LOG     🔍 Navbar - User from store: null
+[00:12:47.035] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/dashboard" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+-                         crxemulator=""
+                        >
+                  ...
+
+[00:12:47.035] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:12:47.035] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:47.035] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:47.035] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:47.035] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:12:47.177] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:12:47.177] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:12:47.177] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764362210697}
+[00:13:38.318] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:13:38.319] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:14:30.594] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:14:30.594] Browser LOG     🔍 Navbar - User from store: {"email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinoenda"}
+[00:14:30.594] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinotenda"}
+[00:14:30.594] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinotenda"}
+[00:14:54.999] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinotenda"}
+[00:14:54.999] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinotenda@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinotenda"}
+[00:14:54.999] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinz@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinotenda"}
+[00:14:54.999] Browser LOG     🔍 Navbar - User from store: {"created_at":"2025-11-28T19:54:31.392Z","email":"tinz@gmail.com","id":"dd7d7989-9c22-45f0-8cb8-f2d71703d041","mobile":"0776750786","name":"Tinotenda"}
