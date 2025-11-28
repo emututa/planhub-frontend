@@ -1,20 +1,36 @@
-// FILE: components/UserProfileDrawer.tsx
-// This is a NEW component - create this file in your components folder
 
+
+
+// FILE: components/UserProfileDrawer.tsx
 "use client"
 
 import React, { useState, useEffect } from 'react'
 import { LogOut, User, Mail, Lock, Edit2, Check, X } from 'lucide-react'
-import { useUserStore } from '@/context/userStore' // Import your actual store
+import { userRoutes } from '@/lib/api/authApi'
 
-export default function UserProfileDrawer() {
-  const { user, updateUser, logout, isLoading } = useUserStore()
+interface UserData {
+  id?: string
+  name: string
+  email: string
+  mobile?: string
+}
+
+interface UserProfileDrawerProps {
+  user: UserData | null
+  onLogout: () => void
+  onClose?: () => void
+  onUserUpdate?: (user: UserData) => void
+}
+
+export default function UserProfileDrawer({ user, onLogout, onClose, onUserUpdate }: UserProfileDrawerProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   
   const [editMode, setEditMode] = useState<'name' | 'email' | 'password' | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobile: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
@@ -26,8 +42,9 @@ export default function UserProfileDrawer() {
     if (user) {
       setFormData(prev => ({
         ...prev,
-        name: user.name,
-        email: user.email
+        name: user.name || '',
+        email: user.email || '',
+        mobile: user.mobile || ''
       }))
     }
   }, [user])
@@ -44,6 +61,7 @@ export default function UserProfileDrawer() {
       ...prev,
       name: user?.name || '',
       email: user?.email || '',
+      mobile: user?.mobile || '',
       currentPassword: '',
       newPassword: '',
       confirmPassword: ''
@@ -54,38 +72,46 @@ export default function UserProfileDrawer() {
   const handleSave = async () => {
     setError('')
     setSuccess('')
+    setIsLoading(true)
 
     try {
       if (editMode === 'name') {
         if (!formData.name.trim()) {
           setError('Name cannot be empty')
+          setIsLoading(false)
           return
         }
-        await updateUser(user?.id || '', { name: formData.name })
+        const updatedUser = await userRoutes.updateUser(user?.id || '', { name: formData.name })
+        onUserUpdate?.(updatedUser)
         setSuccess('Name updated successfully!')
       } 
       else if (editMode === 'email') {
         if (!formData.email.trim() || !formData.email.includes('@')) {
           setError('Please enter a valid email')
+          setIsLoading(false)
           return
         }
-        await updateUser(user?.id || '', { email: formData.email })
+        const updatedUser = await userRoutes.updateUser(user?.id || '', { email: formData.email })
+        onUserUpdate?.(updatedUser)
         setSuccess('Email updated successfully!')
       } 
       else if (editMode === 'password') {
         if (!formData.currentPassword) {
           setError('Please enter your current password')
+          setIsLoading(false)
           return
         }
         if (formData.newPassword.length < 6) {
           setError('New password must be at least 6 characters')
+          setIsLoading(false)
           return
         }
         if (formData.newPassword !== formData.confirmPassword) {
           setError('Passwords do not match')
+          setIsLoading(false)
           return
         }
-        await updateUser(user?.id || '', { 
+        await userRoutes.updateUser(user?.id || '', { 
           password: formData.newPassword,
           currentPassword: formData.currentPassword 
         } as any)
@@ -98,36 +124,50 @@ export default function UserProfileDrawer() {
         }))
       }
       
+      setIsLoading(false)
       setTimeout(() => {
         setEditMode(null)
         setSuccess('')
       }, 2000)
     } catch (err: any) {
       setError(err.message || 'Update failed')
+      setIsLoading(false)
     }
   }
 
   const handleLogout = () => {
-    logout()
+    onLogout()
+    setIsOpen(false)
+    onClose?.()
+  }
+
+  const handleOpenDrawer = () => {
+    setIsOpen(true)
+    onClose?.()
+  }
+
+  const handleCloseDrawer = () => {
     setIsOpen(false)
   }
 
+  if (!user) return null
+
   return (
     <>
-      {/* Profile Button - Add this to your Navbar */}
+      {/* Profile Button - Circle with First Letter */}
       <button
-        onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+        onClick={handleOpenDrawer}
+        className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold text-lg flex items-center justify-center hover:shadow-lg transition-all hover:scale-105"
+        title="My Profile"
       >
-        <User size={20} />
-        <span className="hidden sm:inline">My Profile</span>
+        {user.name?.charAt(0).toUpperCase() || 'U'}
       </button>
 
       {/* Overlay */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
-          onClick={() => setIsOpen(false)}
+          onClick={handleCloseDrawer}
         />
       )}
 
@@ -143,7 +183,7 @@ export default function UserProfileDrawer() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-bold">My Profile</h2>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleCloseDrawer}
                 className="p-2 hover:bg-white/20 rounded-lg transition-colors"
               >
                 <X size={24} />
@@ -151,11 +191,11 @@ export default function UserProfileDrawer() {
             </div>
             <div className="flex items-center gap-3">
               <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">
-                {user?.name?.charAt(0).toUpperCase()}
+                {user.name?.charAt(0).toUpperCase() || 'U'}
               </div>
               <div>
-                <p className="font-semibold text-lg">{user?.name}</p>
-                <p className="text-blue-100 text-sm">{user?.email}</p>
+                <p className="font-semibold text-lg">{user.name}</p>
+                <p className="text-blue-100 text-sm">{user.email}</p>
               </div>
             </div>
           </div>
@@ -220,7 +260,7 @@ export default function UserProfileDrawer() {
                   </div>
                 </div>
               ) : (
-                <p className="text-gray-900">{user?.name}</p>
+                <p className="text-gray-900">{user.name}</p>
               )}
             </div>
 
@@ -267,7 +307,7 @@ export default function UserProfileDrawer() {
                   </div>
                 </div>
               ) : (
-                <p className="text-gray-900">{user?.email}</p>
+                <p className="text-gray-900">{user.email}</p>
               )}
             </div>
 
