@@ -1,26 +1,27 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { postRoutes } from "@/lib/api/postApi"
+import { CreatePostData, UpdatePostData, PostResponse } from "@/lib/Interface/post"
 
-export default function PostModal({
-  post,
-  onClose,
-  onSubmit,
-}: {
-  post?: any
+interface PostModalProps {
+  post?: PostResponse
   onClose: () => void
-  onSubmit: (data: any) => void
-}) {
+  onSubmit: () => void
+}
+
+export default function PostModal({ post, onClose, onSubmit }: PostModalProps) {
   const [formData, setFormData] = useState({
     title: post?.title || "",
     description: post?.description || "",
-    image: post?.image || "",
+    image_url: post?.image_url || "",
   })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -32,17 +33,45 @@ export default function PostModal({
     if (file) {
       const reader = new FileReader()
       reader.onloadend = () => {
-        setFormData((prev) => ({ ...prev, image: reader.result as string }))
+        setFormData((prev) => ({ ...prev, image_url: reader.result as string }))
       }
       reader.readAsDataURL(file)
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (formData.title.trim() && formData.description.trim()) {
-      onSubmit(formData)
-      setFormData({ title: "", description: "", image: "" })
+    
+    if (!formData.title.trim()) {
+      setError("Title is required")
+      return
+    }
+
+    try {
+      setLoading(true)
+      setError(null)
+
+      const data: CreatePostData | UpdatePostData = {
+        title: formData.title,
+        description: formData.description || undefined,
+        image_url: formData.image_url || undefined,
+      }
+
+      if (post) {
+        // Update existing post
+        await postRoutes.updatePost(post.id, data)
+      } else {
+        // Create new post
+        await postRoutes.createPost(data as CreatePostData)
+      }
+
+      onSubmit()
+      onClose()
+    } catch (err: any) {
+      console.error("Error submitting post:", err)
+      setError(err.response?.data?.error || err.message || "Failed to save post")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -54,8 +83,14 @@ export default function PostModal({
         </CardHeader>
         <CardContent className="pt-6">
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+                {error}
+              </div>
+            )}
+
             <div>
-              <label className="block text-sm font-medium mb-2">Title</label>
+              <label className="block text-sm font-medium mb-2">Title *</label>
               <Input
                 name="title"
                 value={formData.title}
@@ -63,6 +98,7 @@ export default function PostModal({
                 placeholder="Post title"
                 className="bg-input border-border"
                 required
+                disabled={loading}
               />
             </div>
 
@@ -74,16 +110,22 @@ export default function PostModal({
                 onChange={handleChange}
                 placeholder="Share your thoughts..."
                 className="w-full h-32 p-3 bg-input border border-border rounded-md text-foreground placeholder:text-muted-foreground"
-                required
+                disabled={loading}
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-2">Image (Optional)</label>
-              <input type="file" accept="image/*" onChange={handleImageChange} className="w-full" />
-              {formData.image && (
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageChange} 
+                className="w-full"
+                disabled={loading}
+              />
+              {formData.image_url && (
                 <img
-                  src={formData.image || "/placeholder.svg"}
+                  src={formData.image_url}
                   alt="Preview"
                   className="mt-3 h-32 object-cover rounded-lg"
                 />
@@ -91,13 +133,18 @@ export default function PostModal({
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
-                {post ? "Update Post" : "Create Post"}
+              <Button 
+                type="submit" 
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                disabled={loading}
+              >
+                {loading ? "Saving..." : post ? "Update Post" : "Create Post"}
               </Button>
               <Button
                 type="button"
                 onClick={onClose}
                 className="flex-1 bg-secondary/20 hover:bg-secondary/30 text-foreground"
+                disabled={loading}
               >
                 Cancel
               </Button>
@@ -108,3 +155,125 @@ export default function PostModal({
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client"
+
+// import type React from "react"
+
+// import { useState } from "react"
+// import { Button } from "@/components/ui/button"
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+// import { Input } from "@/components/ui/input"
+
+// export default function PostModal({
+//   post,
+//   onClose,
+//   onSubmit,
+// }: {
+//   post?: any
+//   onClose: () => void
+//   onSubmit: (data: any) => void
+// }) {
+//   const [formData, setFormData] = useState({
+//     title: post?.title || "",
+//     description: post?.description || "",
+//     image: post?.image || "",
+//   })
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//     const { name, value } = e.target
+//     setFormData((prev) => ({ ...prev, [name]: value }))
+//   }
+
+//   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0]
+//     if (file) {
+//       const reader = new FileReader()
+//       reader.onloadend = () => {
+//         setFormData((prev) => ({ ...prev, image: reader.result as string }))
+//       }
+//       reader.readAsDataURL(file)
+//     }
+//   }
+
+//   const handleSubmit = (e: React.FormEvent) => {
+//     e.preventDefault()
+//     if (formData.title.trim() && formData.description.trim()) {
+//       onSubmit(formData)
+//       setFormData({ title: "", description: "", image: "" })
+//     }
+//   }
+
+//   return (
+//     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+//       <Card className="w-full max-w-2xl max-h-screen overflow-y-auto border-primary/20">
+//         <CardHeader className="bg-secondary text-secondary-foreground">
+//           <CardTitle>{post ? "Edit Post" : "Create Post"}</CardTitle>
+//         </CardHeader>
+//         <CardContent className="pt-6">
+//           <form onSubmit={handleSubmit} className="space-y-4">
+//             <div>
+//               <label className="block text-sm font-medium mb-2">Title</label>
+//               <Input
+//                 name="title"
+//                 value={formData.title}
+//                 onChange={handleChange}
+//                 placeholder="Post title"
+//                 className="bg-input border-border"
+//                 required
+//               />
+//             </div>
+
+//             <div>
+//               <label className="block text-sm font-medium mb-2">Description</label>
+//               <textarea
+//                 name="description"
+//                 value={formData.description}
+//                 onChange={handleChange}
+//                 placeholder="Share your thoughts..."
+//                 className="w-full h-32 p-3 bg-input border border-border rounded-md text-foreground placeholder:text-muted-foreground"
+//                 required
+//               />
+//             </div>
+
+//             <div>
+//               <label className="block text-sm font-medium mb-2">Image (Optional)</label>
+//               <input type="file" accept="image/*" onChange={handleImageChange} className="w-full" />
+//               {formData.image && (
+//                 <img
+//                   src={formData.image || "/placeholder.svg"}
+//                   alt="Preview"
+//                   className="mt-3 h-32 object-cover rounded-lg"
+//                 />
+//               )}
+//             </div>
+
+//             <div className="flex gap-3 pt-4">
+//               <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
+//                 {post ? "Update Post" : "Create Post"}
+//               </Button>
+//               <Button
+//                 type="button"
+//                 onClick={onClose}
+//                 className="flex-1 bg-secondary/20 hover:bg-secondary/30 text-foreground"
+//               >
+//                 Cancel
+//               </Button>
+//             </div>
+//           </form>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   )
+// }
